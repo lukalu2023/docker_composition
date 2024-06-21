@@ -1,0 +1,5 @@
+build image:
+    docker build -t registry.cn-hangzhou.aliyuncs.com/sxicc_luka/centos-py3.12:latest .
+
+run container:
+    docker run -it registry.cn-hangzhou.aliyuncs.com/sxicc_luka/centos-py3.12:latest /bin/bash
