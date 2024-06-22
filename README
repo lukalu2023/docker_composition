@@ -3,3 +3,6 @@ build image:
 
 run container:
     docker run -it registry.cn-hangzhou.aliyuncs.com/sxicc_luka/centos-py3.12:latest /bin/bash
+
+docker-hub:
+    https://cr.console.aliyun.com/repository/cn-hangzhou/sxicc_luka/centos-py3.12/images
