@@ -1,0 +1,33 @@
+FROM registry.cn-hangzhou.aliyuncs.com/sxicc_luka/centos-py3.12:with_py_requirements
+
+WORKDIR /usr/src/app
+
+COPY ./prepare.sh /usr/src/app
+
+COPY ./requirements.txt /usr/src/app
+
+COPY ./CentOS-Base.repo /usr/src/app
+
+COPY ./scipy-1.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl /usr/src/app
+
+RUN  mv -f ./CentOS-Base.repo /etc/yum.repos.d/ 
+
+RUN rm /usr/bin/python
+
+RUN ln -s /usr/bin/python2.7 /usr/bin/python
+
+RUN #yum clean all
+
+RUN #yum makecache fast
+
+RUN yum -y install libffi-devel
+
+RUN sh prepare.sh
+
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple ./scipy-1.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+CMD ["python", "main.py"]
+
+# 环境更新，重新安装了libffi-devel，否则会报错：_ctype（）异常， yum使用需要python软链接指向python2.7，必须先把python3.12.4链接删掉。安装完之后，重新安装python
